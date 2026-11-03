@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="static/css/index.css">
-  <link rel="stylesheet" href="static/css/project.css">
+  <link rel="stylesheet" href="static/css/project.css?v=4">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="static/js/bulma-carousel.min.js"></script>
@@ -31,6 +31,18 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
   <script>hljs.highlightAll();</script>
+  <style>
+    .overview-video { position: relative; border-radius: 10px; overflow: hidden; border: 1px solid #e5e5e5;
+      box-shadow: 0 1px 2px rgba(40,36,28,.04), 0 12px 34px rgba(40,36,28,.08); background: #F7F6F2; }
+    .overview-video video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; }
+    .overview-sound { position: absolute; top: 14px; right: 14px; z-index: 2; width: 42px; height: 42px; padding: 0;
+      display: flex; align-items: center; justify-content: center; border: 1px solid rgba(0,0,0,.1); border-radius: 50%;
+      background: rgba(255,255,255,.92); color: #1D1D1B; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+    .overview-sound:hover { background: #fff; }
+    .overview-sound .icon-on { display: none; }
+    .overview-sound.is-on .icon-on { display: block; }
+    .overview-sound.is-on .icon-off { display: none; }
+  </style>
 </head>
 
 <body>
@@ -93,7 +105,10 @@
                aria-label="32 second overview of the paper">
           <source src="static/videos/overview.mp4" type="video/mp4">
         </video>
-        <button id="overview-sound" class="overview-sound" type="button" aria-label="Turn sound on">Sound on</button>
+        <button id="overview-sound" class="overview-sound" type="button" aria-label="Turn sound on" title="Sound">
+          <svg class="icon-off" viewBox="0 0 24 24" width="20" height="20"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16.5 9.5l5 5M21.5 9.5l-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="icon-on" viewBox="0 0 24 24" width="20" height="20"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
       </div>
     </div>
   </div>
@@ -360,7 +375,7 @@ checks = load_dataset(repo, "checks_standard_test_split", split="train")</code><
     if (!v || !b) return;
     var tryPlay = function () {
       if (!v.paused) return;
-      v.muted = v.muted || !b.dataset.unmuted;
+      if (!b.dataset.unmuted) v.muted = true;
       var p = v.play();
       if (p && p.catch) p.catch(function () {});
     };
@@ -368,8 +383,16 @@ checks = load_dataset(repo, "checks_standard_test_split", split="train")</code><
     v.addEventListener("canplay", tryPlay);
     document.addEventListener("visibilitychange", function () { if (!document.hidden) tryPlay(); });
     window.addEventListener("load", tryPlay);
-    var sync = function () { b.style.display = v.muted ? "" : "none"; };
-    b.addEventListener("click", function () { b.dataset.unmuted = "1"; v.muted = false; v.currentTime = 0; v.play(); sync(); });
+    var sync = function () {
+      b.classList.toggle("is-on", !v.muted);
+      b.setAttribute("aria-label", v.muted ? "Turn sound on" : "Turn sound off");
+    };
+    b.addEventListener("click", function () {
+      if (v.muted && !b.dataset.unmuted) { b.dataset.unmuted = "1"; v.currentTime = 0; }
+      v.muted = !v.muted;
+      v.play();
+      sync();
+    });
     v.addEventListener("volumechange", sync);
   })();
 </script>
