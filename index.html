@@ -83,17 +83,18 @@
   </div>
 </section>
 
-<!-- Teaser: Figure 1 -->
+<!-- Overview video -->
 <section class="hero teaser">
   <div class="container is-max-desktop">
     <div class="hero-body">
-      <img src="static/images/fig1_overview.png" class="figure-img" alt="Figure 1. Left, AUROC on the standard test split for 24 open-weight monitors and two classifiers that never run the code. Right, bag-of-words AUROC, Sonnet 5 monitor AUROC and the share of real backdoors caught, for four kinds of pair named by who wrote the honest and the backdoored code.">
-      <h2 class="subtitle has-text-centered teaser-caption">
-        Two classifiers that never run the code, bag-of-words and a classifier that reads only problem metadata,
-        outrank 20 of the 24 open-weight models prompted as monitors on the standard test split (a).
-        Swapping who wrote each class shows the classifier rewards a contrast between authors (b), while a
-        Sonnet&nbsp;5 monitor catches fewer of Sonnet&nbsp;5's backdoors than of the older models' (c, d).
-      </h2>
+      <div class="overview-video">
+        <video id="overview-video" autoplay muted loop playsinline preload="auto" controls
+               poster="static/videos/overview_poster.jpg"
+               aria-label="32 second overview of the paper">
+          <source src="static/videos/overview.mp4" type="video/mp4">
+        </video>
+        <button id="overview-sound" class="overview-sound" type="button" aria-label="Turn sound on">Sound on</button>
+      </div>
     </div>
   </div>
 </section>
@@ -123,6 +124,21 @@
           </p>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- Figure 1 -->
+<section class="section figure-one">
+  <div class="container is-max-desktop">
+    <div>
+      <img src="static/images/fig1_overview.png" class="figure-img" alt="Figure 1. Left, AUROC on the standard test split for 24 open-weight monitors and two classifiers that never run the code. Right, bag-of-words AUROC, Sonnet 5 monitor AUROC and the share of real backdoors caught, for four kinds of pair named by who wrote the honest and the backdoored code.">
+      <h2 class="subtitle has-text-centered teaser-caption">
+        Two classifiers that never run the code, bag-of-words and a classifier that reads only problem metadata,
+        outrank 20 of the 24 open-weight models prompted as monitors on the standard test split (a).
+        Swapping who wrote each class shows the classifier rewards a contrast between authors (b), while a
+        Sonnet&nbsp;5 monitor catches fewer of Sonnet&nbsp;5's backdoors than of the older models' (c, d).
+      </h2>
     </div>
   </div>
 </section>
@@ -335,6 +351,26 @@ checks = load_dataset(repo, "checks_standard_test_split", split="train")</code><
       }).join('');
     });
   }, 0); });
+</script>
+<script>
+  (function () {
+    var v = document.getElementById("overview-video");
+    var b = document.getElementById("overview-sound");
+    if (!v || !b) return;
+    var tryPlay = function () {
+      if (!v.paused) return;
+      v.muted = v.muted || !b.dataset.unmuted;
+      var p = v.play();
+      if (p && p.catch) p.catch(function () {});
+    };
+    tryPlay();
+    v.addEventListener("canplay", tryPlay);
+    document.addEventListener("visibilitychange", function () { if (!document.hidden) tryPlay(); });
+    window.addEventListener("load", tryPlay);
+    var sync = function () { b.style.display = v.muted ? "" : "none"; };
+    b.addEventListener("click", function () { b.dataset.unmuted = "1"; v.muted = false; v.currentTime = 0; v.play(); sync(); });
+    v.addEventListener("volumechange", sync);
+  })();
 </script>
 </body>
 </html>

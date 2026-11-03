@@ -253,3 +253,37 @@ body { color: var(--ink); }
 @media (max-width: 768px) {
   .pairs { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* Overview video above the abstract */
+.overview-video {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--edge);
+  box-shadow: 0 1px 2px rgba(40, 36, 28, 0.04), 0 12px 34px rgba(40, 36, 28, 0.08);
+  background: #F7F6F2;
+}
+.overview-video video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+}
+.overview-sound {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  padding: 6px 14px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #1D1D1B;
+  font: 500 0.9rem "Google Sans", "Noto Sans", sans-serif;
+  cursor: pointer;
+}
+.overview-sound:hover {
+  background: #fff;
+}
+.figure-one {
+  padding-bottom: 1.5rem;
+}
