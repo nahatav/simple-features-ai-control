@@ -21,7 +21,7 @@
 
   <link rel="icon" type="image/svg+xml" href="static/images/icon.svg?v=2">
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro|JetBrains+Mono:400,600" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:wght@400;500&family=Roboto:wght@400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="static/css/bulma.min.css">
   <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
@@ -75,13 +75,14 @@
     .ov-cc-btn { margin-left: auto; position: relative; }
     .ov-cc-btn::after { content: ""; position: absolute; left: 9px; right: 9px; bottom: 9px; height: 3px; border-radius: 2px; background: #A9C3EA; transform: scaleX(0); transition: transform .15s ease; }
     .overview-video.cc-on .ov-cc-btn::after { transform: scaleX(1); }
-    /* subtitles, drawn by the page so they clear the controls */
-    .ov-cc { position: absolute; left: 0; right: 0; bottom: 4.5%; display: flex; justify-content: center; pointer-events: none; line-height: 1.35;
-      transition: bottom .25s cubic-bezier(.4,0,.2,1); }
-    .ov-cc span { white-space: pre-line; max-width: 82%; padding: .12em .45em; border-radius: 4px; background: rgba(8,8,8,.75); color: #fff; text-align: center;
-      font-family: "Roboto", "Google Sans", "Noto Sans", Arial, sans-serif; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+    /* subtitles in YouTube's default caption style: white Roboto on a 75% black box per line */
+    .ov-cc { position: absolute; left: 2%; right: 2%; bottom: 2.6%; text-align: center; pointer-events: none; line-height: 1.32;
+      transition: bottom .2s cubic-bezier(.4,0,.2,1); }
+    .ov-cc .ln { background: rgba(8,8,8,.75); color: #fff; padding: 0 .25em; white-space: pre-wrap;
+      font-family: "YouTube Noto", Roboto, Arial, Helvetica, Verdana, "PT Sans Caption", sans-serif; font-weight: 400;
+      -webkit-box-decoration-break: clone; box-decoration-break: clone; }
     .ov-cc:empty, .overview-video:not(.cc-on) .ov-cc { display: none; }
-    .overview-video.started.show-ui .ov-cc, .overview-video.started:not(.is-playing) .ov-cc { bottom: 72px; }
+    .overview-video.started.show-ui .ov-cc, .overview-video.started:not(.is-playing) .ov-cc { bottom: 58px; }
     .ov-btn .i-pause, .overview-video.is-playing .ov-btn .i-play { display: none; }
     .overview-video.is-playing .ov-btn .i-pause { display: block; }
     .overview-video.is-playing.idle video { cursor: none; }
@@ -432,9 +433,13 @@ checks = load_dataset(repo, "checks_standard_test_split", split="train")</code><
       if (list) for (var i = 0; i < list.length; i++) if (list[i].startTime <= now && now < list[i].endTime) cue = list[i];
       if (cue === ccLast) return;
       ccLast = cue; ccBox.innerHTML = "";
-      if (cue) { var sp = document.createElement("span"); sp.textContent = cue.text; ccBox.appendChild(sp); }
+      if (cue) cue.text.split(String.fromCharCode(10)).forEach(function (line, i) {
+        if (i) ccBox.appendChild(document.createElement("br"));
+        var ln = document.createElement("span"); ln.className = "ln"; ln.textContent = line; ccBox.appendChild(ln);
+      });
     };
-    var ccSize = function () { ccBox.style.fontSize = Math.max(13, Math.min(34, box.clientWidth * 0.024)) + "px"; };
+    // YouTube sizes captions from the player's height
+    var ccSize = function () { var h = (document.fullscreenElement === box ? window.innerHeight : v.clientHeight) || box.clientHeight; ccBox.style.fontSize = Math.max(11, h / 22.5) + "px"; };
     var ccSet = function (on) {
       ccOn = on; box.classList.toggle("cc-on", on); ccBtn.setAttribute("aria-pressed", on ? "true" : "false");
       try { localStorage.setItem("ov-cc", on ? "1" : "0"); } catch (e) {}
