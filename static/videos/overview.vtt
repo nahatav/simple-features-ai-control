@@ -1,78 +1,86 @@
 WEBVTT
 
 1
-00:00:00.150 --> 00:00:02.751
-Simple features beat most AI control monitors.
+00:00:00.290 --> 00:00:03.610
+Simple features beat most AI control monitors. Here's the setup.
 
 2
-00:00:02.850 --> 00:00:05.531
+00:00:03.710 --> 00:00:06.090
 An AI agent slips two lines into a file.
 
 3
-00:00:05.631 --> 00:00:09.654
-A monitor model reads the problem and the code, and scores how suspicious it looks.
+00:00:06.050 --> 00:00:09.470
+A monitor reads the problem and the code, and scores how suspicious it looks.
 
 4
-00:00:11.104 --> 00:00:15.604
-Every solution gets a score. A good monitor pulls the honest and backdoored piles apart.
+00:00:10.316 --> 00:00:14.816
+Score every solution, and a good monitor pulls the honest and backdoored piles apart.
 
 5
-00:00:15.574 --> 00:00:19.138
-Here are twenty four published monitors, from best to worst.
+00:00:15.116 --> 00:00:18.076
+These are twenty four published monitors, from best to worst.
 
 6
-00:00:19.108 --> 00:00:22.766
-Now add a word counter that never even runs the code. It beats twenty of them.
+00:00:18.216 --> 00:00:20.656
+Now add a word counter that never runs the code.
 
 7
-00:00:24.454 --> 00:00:27.436
-Why? Each pile was written by a different author.
+00:00:20.576 --> 00:00:21.896
+It beats twenty of them.
 
 8
-00:00:27.406 --> 00:00:30.294
-People write compact code. Models add spaces.
+00:00:23.115 --> 00:00:24.175
+Why does that work?
 
 9
-00:00:31.154 --> 00:00:34.131
-And one in seven test backdoors can never even trigger.
+00:00:24.475 --> 00:00:26.515
+Each pile was written by a different author.
 
 10
-00:00:35.154 --> 00:00:38.462
-Keep the problems, swap the authors, and the score follows them.
+00:00:26.635 --> 00:00:29.635
+People write compact code, and models add spaces.
 
 11
-00:00:38.432 --> 00:00:41.762
-Backdoors by Claude Sonnet 5 push it up to point nine five.
+00:00:29.655 --> 00:00:32.395
+And one in seven test backdoors can never even trigger.
 
 12
-00:00:41.732 --> 00:00:44.837
-When Sonnet 5 writes both sides, it falls to point seven five.
+00:00:32.803 --> 00:00:36.083
+Keep the problems but swap the authors, and the score follows them.
 
 13
-00:00:44.807 --> 00:00:48.674
-So we rebuilt the benchmark with one author, and checked that every backdoor works.
+00:00:36.083 --> 00:00:39.483
+With backdoors by Claude Sonnet 5, it rises to point nine five.
 
 14
-00:00:48.644 --> 00:00:52.577
-A Sonnet 5 monitor catches seventy seven percent of the older models' backdoors,
+00:00:39.623 --> 00:00:42.463
+When Sonnet 5 writes both sides, it drops to point seven five.
 
 15
-00:00:52.547 --> 00:00:54.292
-but only thirty seven percent of its own.
+00:00:42.974 --> 00:00:47.534
+So we rebuilt the benchmark with one author, and checked that every backdoor works.
 
 16
-00:00:55.647 --> 00:00:59.674
-Count only the backdoors that work, and it catches sixty one percent. Still fewer.
+00:00:47.774 --> 00:00:51.774
+A Sonnet 5 monitor catches seventy seven percent of the older models' backdoors.
 
 17
-00:01:00.547 --> 00:01:03.978
-Before you trust a monitor benchmark, report baselines that never run the code,
+00:00:51.774 --> 00:00:54.614
+Of its own, it catches only thirty seven percent.
 
 18
-00:01:03.728 --> 00:01:07.280
-pair each class with code by another author, and check that every backdoor works.
+00:00:54.694 --> 00:00:57.854
+Count only the ones that work, and that rises to sixty one. Still fewer.
 
 19
-00:01:07.250 --> 00:01:11.254
-A high score on a benchmark is not, by itself, evidence of sabotage detection.
+00:00:58.463 --> 00:01:02.813
+So before you trust a monitor benchmark, report baselines that never run the code,
+
+20
+00:01:02.513 --> 00:01:06.863
+pair each class with code by another author, and check that every backdoor works.
+
+21
+00:01:07.183 --> 00:01:11.463
+Because a high score on a benchmark is not, by itself, evidence of sabotage detection.
 

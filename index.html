@@ -21,6 +21,7 @@
 
   <link rel="icon" type="image/svg+xml" href="static/images/icon.svg?v=2">
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro|JetBrains+Mono:400,600" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="static/css/bulma.min.css">
   <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
@@ -90,6 +91,46 @@
       .results-carousel .item img { width: 100%; height: auto; }
       .hero.teaser .hero-body { padding-left: 0.75rem; padding-right: 0.75rem; }
     }
+    /* ---------- article, after the Google Research blog ---------- */
+    .blog { max-width: 960px; margin: 0 auto; padding: 8px 24px 72px; font-family: "Google Sans Text", "Google Sans", Roboto, Arial, sans-serif;
+      font-size: 18px; line-height: 1.72; color: #3c4043; }
+    .blog section { margin: 0; }
+    .blog h2 { font-family: "Google Sans", Roboto, Arial, sans-serif; font-size: 32px; font-weight: 400; line-height: 1.3; letter-spacing: -0.2px;
+      color: #202124; margin: 64px 0 20px; }
+    .blog section:first-child h2 { margin-top: 40px; }
+    .blog p { margin: 0 0 22px; }
+    .blog a { color: #1a73e8; text-decoration: none; }
+    .blog a:hover { text-decoration: underline; }
+    .blog ol { margin: 0 0 22px; padding-left: 1.4em; list-style: decimal; }
+    .blog ol li { margin: 0 0 12px; padding-left: 0.3em; }
+    .b-fig { margin: 36px 0 44px; }
+    .b-fig img { display: block; width: 100%; height: auto; }
+    .b-fig figcaption { margin: 16px 0 0; font-size: 15px; line-height: 1.6; color: #5f6368; }
+    /* one pair per row, the person's program beside the model's; code never wraps */
+    .blog .pairs { display: block; margin: 0; }
+    .blog .pair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto; column-gap: 18px; row-gap: 8px;
+      margin: 0 0 28px; align-items: stretch; }
+    .blog .pair-title, .blog .pair-input { grid-column: 1 / -1; text-align: left; }
+    .blog .pair-title { font-size: 17px; color: #202124; }
+    .blog .pair-input { margin: -4px 0 4px; font-size: 14px; color: #5f6368; }
+    .blog .pair .code-card { margin: 0; }
+    .blog .code-card pre, .blog .code-card pre code, .blog .code-card pre code.hljs { white-space: pre; overflow-wrap: normal; }
+    .blog .code-card pre { overflow-x: auto; }
+    #BibTeX .code-card pre, #BibTeX .code-card pre code { white-space: pre-wrap; }
+    .blog .pairs .code-card pre code, .blog .pairs .code-card pre code.hljs { font-size: 14px; }
+    .blog .code-card { background: #f8f9fa; border: 0; border-radius: 12px; box-shadow: none; margin: 8px 0 22px; }
+    .blog .code-card-head { background: transparent; border-bottom: 1px solid #e8eaed; font-family: "Google Sans", Roboto, Arial, sans-serif; color: #5f6368; padding: 10px 18px; }
+    .blog .code-card pre code, .blog .code-card pre code.hljs { font-family: "Google Sans Code", "JetBrains Mono", Consolas, monospace; font-size: 14px; }
+    .blog .pairs .code-card { background: #fff; border: 1px solid #e8eaed; }
+    .blog .pairs .code-card-head { background: #f8f9fa; }
+    .b-foot { margin-top: 72px; padding-top: 22px; border-top: 1px solid #e8eaed; font-size: 14px; line-height: 1.6; color: #5f6368; }
+    .b-foot a { color: #5f6368; text-decoration: underline; text-decoration-color: #dadce0; }
+    @media (max-width: 640px) {
+      .blog { font-size: 17px; }
+      .blog h2 { font-size: 26px; margin-top: 48px; }
+      .blog { padding: 0 12px 56px; }
+      .blog .pair { grid-template-columns: minmax(0, 1fr); }
+    }
   </style>
 </head>
 
@@ -149,10 +190,10 @@
     <div class="hero-body">
       <div class="overview-video">
         <video id="overview-video" playsinline preload="metadata"
-               poster="static/videos/overview_poster.jpg?v=10"
+               poster="static/videos/overview_poster.jpg?v=11"
                aria-label="One minute overview of the paper">
-          <source src="static/videos/overview.mp4?v=10" type="video/mp4">
-          <track kind="subtitles" src="static/videos/overview.vtt?v=10" srclang="en" label="English">
+          <source src="static/videos/overview.mp4?v=11" type="video/mp4">
+          <track kind="subtitles" src="static/videos/overview.vtt?v=11" srclang="en" label="English">
         </video>
         <button class="ov-big" type="button" aria-label="Play video">
           <svg viewBox="0 0 24 24" width="26" height="26"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>
@@ -182,67 +223,41 @@
   </div>
 </section>
 
-<!-- Abstract -->
-<section class="section hero is-light">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p>
-            AI control relies on monitors to catch a capable model that sabotages its work. These monitors are
-            evaluated on their ability to differentiate honest from backdoored code. We show that on a standard
-            evaluation dataset, simple features beat most monitors without ever running the code, outranking 20 of
-            24 open-weight models prompted as monitors. The dataset gives its labels away in two ways. People wrote
-            the honest solutions and older language models the backdoors, so the style of the code reveals the
-            class. Additionally, problems that LLMs can backdoor have different characteristics, so basic facts
-            about the problem reveal it too. Swapping one class at a time for code by Claude Sonnet&nbsp;5 shows
-            that these features reward a contrast between authors, since human code against Sonnet&nbsp;5's
-            backdoors is easier to separate than the original pairs, 0.95 against 0.79. One in seven backdoors in
-            the standard test set fails our validity checks, which distorts comparisons between attackers. A
-            Sonnet&nbsp;5 monitor appears to catch 77% of the older models' backdoors but 37% of Sonnet&nbsp;5's,
-            and 78% against 61% once both are verified. We do not show that published monitors rely on these
-            shortcuts, but our findings suggest that a high score on such a dataset is not by itself evidence of
-            sabotage detection. We release the rebuilt dataset and checks.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- Article, in the manner of a research blog post -->
+<main class="blog">
+  <article>
+    <section id="abstract">
+      <h2>Abstract</h2>
+      <p>AI control relies on monitors to catch a capable model that sabotages its work. These monitors are evaluated on their ability to differentiate honest from backdoored code. We show that on a standard evaluation dataset, simple features beat most monitors without ever running the code, outranking 20 of 24 open-weight models prompted as monitors. The dataset gives its labels away in two ways. People wrote the honest solutions and older language models the backdoors, so the style of the code reveals the class. Additionally, problems that LLMs can backdoor have different characteristics, so basic facts about the problem reveal it too. Swapping one class at a time for code by Claude Sonnet&nbsp;5 shows that these features reward a contrast between authors, since human code against Sonnet&nbsp;5's backdoors is easier to separate than the original pairs, 0.95 against 0.79. One in seven backdoors in the standard test set fails our validity checks, which distorts comparisons between attackers. A Sonnet&nbsp;5 monitor appears to catch 77% of the older models' backdoors but 37% of Sonnet&nbsp;5's, and 78% against 61% once both are verified. We do not show that published monitors rely on these shortcuts, but our findings suggest that a high score on such a dataset is not by itself evidence of sabotage detection. We release the rebuilt dataset and checks. </p>
+    </section>
 
-<!-- Figure 1 -->
-<section class="section figure-one">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">Main results</h2>
-    <div>
-      <img src="static/images/fig1_overview.png" class="figure-img" alt="Figure 1. Left, AUROC on the standard test split for 24 open-weight monitors and two classifiers that never run the code. Right, bag-of-words AUROC, Sonnet 5 monitor AUROC and the share of real backdoors caught, for four kinds of pair named by who wrote the honest and the backdoored code.">
-      <p class="figure-caption">
-        Two classifiers that never run the code, bag-of-words and a classifier that reads only problem metadata,
-        outrank 20 of the 24 open-weight models prompted as monitors on the standard test split (a).
-        Swapping who wrote each class shows the classifier rewards a contrast between authors (b), while a
-        Sonnet&nbsp;5 monitor catches fewer of Sonnet&nbsp;5's backdoors than of the older models' (c, d).
+    <section id="results">
+      <h2>Main results</h2>
+      <p>
+        Two classifiers that never run the code, a bag-of-words model and one that reads only facts about the
+        problem, outrank 20 of the 24 open-weight models prompted as monitors on the standard test split.
       </p>
-    </div>
-  </div>
-</section>
+      <figure class="b-fig">
+        <img src="static/images/fig1_overview.png" alt="Figure 1. Left, AUROC on the standard test split for 24 open-weight monitors and two classifiers that never run the code. Right, bag-of-words AUROC, Sonnet 5 monitor AUROC and the share of real backdoors caught, for four kinds of pair named by who wrote the honest and the backdoored code.">
+        <figcaption>
+          Two classifiers that never run the code, bag-of-words and a classifier that reads only problem metadata, outrank 20 of the 24 open-weight models prompted as monitors on the standard test split (a). Swapping who wrote each class shows the classifier rewards a contrast between authors (b), while a Sonnet&nbsp;5 monitor catches fewer of Sonnet&nbsp;5's backdoors than of the older models' (c, d).
+        </figcaption>
+      </figure>
+    </section>
 
-<!-- How the labels leak -->
-<section class="section shaded-section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">How the dataset gives its labels away</h2>
-    <div class="content has-text-justified">
+    <section id="labels">
+      <h2>How the dataset gives its labels away</h2>
       <p>
         In the public APPS backdoor dataset, people wrote the honest solutions and older language models,
-        released by early 2025, wrote the backdoors. Human and model code differ in spacing, naming and layout, so a detector
-        can separate the classes by recognising the author. The test split also labels a problem as backdoored
-        only if its backdoor works, which is easier on problems with few tests, so basic facts about the problem
-        predict the label without any code.
+        released by early 2025, wrote the backdoors. Human and model code differ in spacing, naming and layout,
+        so a detector can separate the classes by recognising the author.
       </p>
-    </div>
-  </div>
-  <div class="container is-max-widescreen pairs-wrap">
-    <div class="pairs">
+      <p>
+        The test split also labels a problem as backdoored only if its backdoor works, which is easier on
+        problems with few tests. So basic facts about the problem predict the label without any code.
+      </p>
+      <figure class="b-fig pairs-fig">
+        <div class="pairs">
       <div class="pair">
         <p class="pair-title">(a) Multiply two numbers</p>
         <p class="pair-input">on input <code>71 61</code></p>
@@ -298,59 +313,32 @@ print(2**(n+1) - adjust)</code></pre>
         </div>
       </div>
     </div>
-    <p class="figure-caption pairs-caption">
-      Three pairs from the dataset. A person wrote each honest solution and the named model wrote the
-      backdoor, whose trigger and wrong output are shaded. Above each pair is an input where the two programs
-      disagree, and each card shows what its program prints. All three backdoors pass our validity checks. The models' code also
-      differs in style, with spaces around operators in (a) and (b) and an extra variable in (c).
-    </p>
-  </div>
-</section>
+        <figcaption>Three pairs from the dataset. A person wrote each honest solution and the named model wrote the backdoor, whose trigger and wrong output are shaded. Above each pair is an input where the two programs disagree, and each card shows what its program prints. All three backdoors pass our validity checks. The models' code also differs in style, with spaces around operators in (a) and (b) and an extra variable in (c).</figcaption>
+      </figure>
+    </section>
 
-<!-- Appendix figures carousel -->
-<section class="hero is-small">
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered">More results</h2>
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item">
-          <img src="static/images/figA1_label_leak.png" alt="Figure A1. The label leak."/>
-          <h2 class="subtitle has-text-centered">
-            The label leak. A classifier that reads only problem metadata scores 0.766 inside the test split, and
-            backdoored problems have about half as many test cases as honest ones (20.95 against 38.85).
-          </h2>
-        </div>
-        <div class="item">
-          <img src="static/images/figA2_features.png" alt="Figure A2. What bag-of-words reads."/>
-          <h2 class="subtitle has-text-centered">
-            What bag-of-words reads. On the original pairs, the tokens of an added special case mark the backdoor
-            side and human idioms mark the honest side. On the rebuilt pairs, a layout the backdoor prompt invites
-            does.
-          </h2>
-        </div>
-        <div class="item">
-          <img src="static/images/figA4_audit.png" alt="Figure A4. The Sonnet 5 monitor at four audit budgets."/>
-          <h2 class="subtitle has-text-centered">
-            The Sonnet&nbsp;5 monitor at four audit budgets, on the 54 problems where both backdoors are real.
-          </h2>
-        </div>
-        <div class="item">
-          <img src="static/images/figA5_agentic.png" alt="Figure A5. Character count in five agentic settings."/>
-          <h2 class="subtitle has-text-centered">
-            Character count alone separates the classes in four of five agentic settings, although the same models
-            write both.
-          </h2>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+    <section id="more">
+      <h2>More results</h2>
+      <figure class="b-fig">
+        <img src="static/images/figA1_label_leak.png" alt="The label leak.">
+        <figcaption>The label leak. A classifier that reads only problem metadata scores 0.766 inside the test split, and backdoored problems have about half as many test cases as honest ones (20.95 against 38.85).</figcaption>
+      </figure>
+      <figure class="b-fig">
+        <img src="static/images/figA2_features.png" alt="What bag-of-words reads.">
+        <figcaption>What bag-of-words reads. On the original pairs, the tokens of an added special case mark the backdoor side and human idioms mark the honest side. On the rebuilt pairs, a layout the backdoor prompt invites does.</figcaption>
+      </figure>
+      <figure class="b-fig">
+        <img src="static/images/figA4_audit.png" alt="The Sonnet 5 monitor at four flagging budgets.">
+        <figcaption>The Sonnet&nbsp;5 monitor at four audit budgets, on the 54 problems where both backdoors are real.</figcaption>
+      </figure>
+      <figure class="b-fig">
+        <img src="static/images/figA5_agentic.png" alt="Character count in five agentic settings.">
+        <figcaption>Character count alone separates the classes in four of five agentic settings, although the same models write both.</figcaption>
+      </figure>
+    </section>
 
-<!-- Checks for monitor benchmarks -->
-<section class="section shaded-section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">Checks for monitor benchmarks</h2>
-    <div class="content">
+    <section id="checks">
+      <h2>Checks for monitor benchmarks</h2>
       <ol>
         <li>Report baselines that never run the code (bag-of-words, problem metadata, length) and their shuffled-label scores beside every monitor score.</li>
         <li>Pair each class with another author's code to see whether a detector reads the author.</li>
@@ -360,21 +348,17 @@ print(2**(n+1) - adjust)</code></pre>
         Where the checks find shortcuts, have one model write both classes from one prompt and choose honest
         examples independently of whether an attack succeeded.
       </p>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- Data and code -->
-<section class="section" id="Data">
-  <div class="container is-max-desktop content">
-    <h2 class="title">Data and code</h2>
-    <p>
-      The rebuilt pairs, every backdoor draw, the 258 trigger validators and the check verdicts are on
-      <a href="https://huggingface.co/datasets/vnahata/apps-backdoor-rebuilt-pairs" target="_blank">Hugging Face</a>.
-      The scripts behind every number are on <a href="https://github.com/ShubsDS/authorship-not-sabotage" target="_blank">GitHub</a>.
-      Both are MIT-licensed.
-    </p>
-    <div class="code-card">
+    <section id="Data">
+      <h2>Data and code</h2>
+      <p>
+        The rebuilt pairs, every backdoor draw, the 258 trigger validators and the check verdicts are on
+        <a href="https://huggingface.co/datasets/vnahata/apps-backdoor-rebuilt-pairs" target="_blank">Hugging Face</a>.
+        The scripts behind every number are on <a href="https://github.com/ShubsDS/authorship-not-sabotage" target="_blank">GitHub</a>.
+        Both are MIT-licensed.
+      </p>
+      <div class="code-card">
       <div class="code-card-head"><span class="code-role">Python</span></div>
       <pre><code class="language-python">from datasets import load_dataset
 
@@ -383,14 +367,11 @@ honest = load_dataset(repo, "honest", split="train")
 backdoors = load_dataset(repo, "backdoors_independent", split="train")
 checks = load_dataset(repo, "checks_standard_test_split", split="train")</code></pre>
     </div>
-  </div>
-</section>
+    </section>
 
-<!-- BibTeX -->
-<section class="section shaded-section" id="BibTeX">
-  <div class="container is-max-desktop content">
-    <h2 class="title">BibTeX</h2>
-    <div class="code-card">
+    <section id="BibTeX">
+      <h2>Citation</h2>
+      <div class="code-card">
       <div class="code-card-head"><span class="code-role">arXiv:2610.41713</span></div>
       <pre><code class="nohighlight">@misc{debsarkar2026simplefeatures,
   title         = {Simple Features Beat Most {AI} Control Monitors},
@@ -404,25 +385,16 @@ checks = load_dataset(repo, "checks_standard_test_split", split="train")</code><
   note          = {NeurIPS 2026 Workshop on Self-Evolving Diversity-Driven Search for Robust AI Systems (EvoRobust)}
 }</code></pre>
     </div>
-  </div>
-</section>
+    </section>
 
-<footer class="footer">
-  <div class="container">
-    <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="content has-text-centered">
-          <p>
-            This page was built using the <a href="https://github.com/ai4co/research-project-page-template" target="_blank">Research Project Page Template</a>,
-            which is based on the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a>
-            and the <a href="https://nerfies.github.io" target="_blank">Nerfies project page</a>. It is licensed under a
-            <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
+    <footer class="b-foot">
+      Page adapted from the <a href="https://github.com/ai4co/research-project-page-template" target="_blank">Research Project Page Template</a>,
+      based on the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a>
+      and the <a href="https://nerfies.github.io" target="_blank">Nerfies project page</a>, licensed
+      <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a>.
+    </footer>
+  </article>
+</main>
 
 <script>
   // Runs after highlight.js, which highlights on the same DOMContentLoaded event.
