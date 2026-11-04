@@ -70,7 +70,17 @@
     .ov-btn { border: 0; background: none; padding: 0 6px; height: 46px; color: #fff; cursor: pointer; display: flex; align-items: center; opacity: .92; }
     .ov-btn:hover { opacity: 1; }
     .ov-time { font-size: 13px; font-variant-numeric: tabular-nums; white-space: nowrap; padding-left: 6px; text-shadow: 0 0 2px rgba(0,0,0,.5); }
-    .ov-fs { margin-left: auto; }
+    .ov-fs { margin-left: 0; }
+    .ov-cc-btn { margin-left: auto; position: relative; }
+    .ov-cc-btn::after { content: ""; position: absolute; left: 9px; right: 9px; bottom: 9px; height: 3px; border-radius: 2px; background: #A9C3EA; transform: scaleX(0); transition: transform .15s ease; }
+    .overview-video.cc-on .ov-cc-btn::after { transform: scaleX(1); }
+    /* subtitles, drawn by the page so they clear the controls */
+    .ov-cc { position: absolute; left: 0; right: 0; bottom: 4.5%; display: flex; justify-content: center; pointer-events: none; line-height: 1.35;
+      transition: bottom .25s cubic-bezier(.4,0,.2,1); }
+    .ov-cc span { max-width: 82%; padding: .12em .45em; border-radius: 4px; background: rgba(8,8,8,.75); color: #fff; text-align: center;
+      font-family: "Roboto", "Google Sans", "Noto Sans", Arial, sans-serif; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+    .ov-cc:empty, .overview-video:not(.cc-on) .ov-cc { display: none; }
+    .overview-video.started.show-ui .ov-cc, .overview-video.started:not(.is-playing) .ov-cc { bottom: 72px; }
     .ov-btn .i-pause, .overview-video.is-playing .ov-btn .i-play { display: none; }
     .overview-video.is-playing .ov-btn .i-pause { display: block; }
     .overview-video.is-playing.idle video { cursor: none; }
@@ -140,12 +150,14 @@
       <div class="overview-video">
         <video id="overview-video" playsinline preload="metadata"
                poster="static/videos/overview_poster.jpg"
-               aria-label="40 second overview of the paper">
+               aria-label="One minute overview of the paper">
           <source src="static/videos/overview.mp4" type="video/mp4">
+          <track kind="subtitles" src="static/videos/overview.vtt" srclang="en" label="English">
         </video>
         <button class="ov-big" type="button" aria-label="Play video">
           <svg viewBox="0 0 24 24" width="26" height="26"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>
         </button>
+        <div class="ov-cc" aria-live="off"></div>
         <div class="ov-shade"></div>
         <div class="ov-bar">
           <div class="ov-track" role="slider" aria-label="Seek" tabindex="0">
@@ -156,7 +168,10 @@
               <svg class="i-play" viewBox="0 0 24 24" width="28" height="28"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>
               <svg class="i-pause" viewBox="0 0 24 24" width="28" height="28"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/></svg>
             </button>
-            <span class="ov-time">0:00 / 0:35</span>
+            <span class="ov-time">0:00 / 1:04</span>
+            <button class="ov-btn ov-cc-btn" type="button" aria-label="Subtitles" aria-pressed="false" title="Subtitles (c)">
+              <svg viewBox="0 0 24 24" width="26" height="26"><rect x="3" y="5" width="18" height="14" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M10.5 10.2a2.2 2.2 0 1 0 0 3.6M16.5 10.2a2.2 2.2 0 1 0 0 3.6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+            </button>
             <button class="ov-btn ov-fs" type="button" aria-label="Full screen">
               <svg viewBox="0 0 24 24" width="26" height="26"><path d="M5 10V5h5M14 5h5v5M19 14v5h-5M10 19H5v-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg>
             </button>
@@ -435,7 +450,7 @@ checks = load_dataset(repo, "checks_standard_test_split", split="train")</code><
     var play = function () { v.muted = false; var p = v.play(); if (p && p.catch) p.catch(function () {}); };
     var flip = function () { if (v.paused || v.ended) play(); else v.pause(); };
     var draw = function () {
-      var d = v.duration || 35, k = Math.min(1, (v.currentTime || 0) / d);
+      var d = v.duration || 64, k = Math.min(1, (v.currentTime || 0) / d);
       fill.style.width = k * 100 + "%"; knob.style.left = k * 100 + "%";
       time.textContent = fmt(v.currentTime) + " / " + fmt(d);
     };
@@ -468,6 +483,31 @@ checks = load_dataset(repo, "checks_standard_test_split", split="train")</code><
       else if (box.requestFullscreen) box.requestFullscreen();
       else if (v.webkitEnterFullscreen) v.webkitEnterFullscreen();
     });
+    // subtitles: the track stays hidden and the page draws the current cue itself
+    var ccBtn = box.querySelector(".ov-cc-btn"), ccBox = box.querySelector(".ov-cc");
+    var tt = v.textTracks && v.textTracks[0];
+    var ccOn = false;
+    try { ccOn = localStorage.getItem("ov-cc") === "1"; } catch (e) {}
+    var ccLast = null;
+    var ccDraw = function () {
+      var cue = null, now = v.currentTime, list = tt && tt.cues;
+      if (list) for (var i = 0; i < list.length; i++) if (list[i].startTime <= now && now < list[i].endTime) cue = list[i];
+      if (cue === ccLast) return;
+      ccLast = cue; ccBox.innerHTML = "";
+      if (cue) { var sp = document.createElement("span"); sp.textContent = cue.text; ccBox.appendChild(sp); }
+    };
+    var ccSize = function () { ccBox.style.fontSize = Math.max(13, Math.min(34, box.clientWidth * 0.024)) + "px"; };
+    var ccSet = function (on) {
+      ccOn = on; box.classList.toggle("cc-on", on); ccBtn.setAttribute("aria-pressed", on ? "true" : "false");
+      try { localStorage.setItem("ov-cc", on ? "1" : "0"); } catch (e) {}
+    };
+    if (tt) { tt.mode = "hidden"; tt.addEventListener("cuechange", ccDraw); }
+    ["timeupdate", "seeked", "loadeddata"].forEach(function (e) { v.addEventListener(e, ccDraw); });
+    ccBtn.addEventListener("click", function () { ccSet(!ccOn); wake(); });
+    box.addEventListener("keydown", function (ev) { if (ev.key === "c" || ev.key === "C") ccSet(!ccOn); });
+    window.addEventListener("resize", ccSize);
+    document.addEventListener("fullscreenchange", ccSize);
+    ccSize(); ccSet(ccOn);
     box.addEventListener("mousemove", wake);
     box.addEventListener("touchstart", wake, { passive: true });
     box.addEventListener("mouseleave", function () { if (!dragging && !v.paused) { clearTimeout(timer); box.classList.remove("show-ui"); } });

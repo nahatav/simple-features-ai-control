@@ -1,0 +1,78 @@
+WEBVTT
+
+1
+00:00:00.150 --> 00:00:02.751
+Simple features beat most AI control monitors.
+
+2
+00:00:02.850 --> 00:00:05.531
+An AI agent slips two lines into a file.
+
+3
+00:00:05.631 --> 00:00:09.654
+A monitor model reads the problem and the code, and scores how suspicious it looks.
+
+4
+00:00:11.104 --> 00:00:15.604
+Every solution gets a score. A good monitor pulls the honest and backdoored piles apart.
+
+5
+00:00:15.574 --> 00:00:19.138
+Here are twenty four published monitors, from best to worst.
+
+6
+00:00:19.108 --> 00:00:22.766
+Now add a word counter that never even runs the code. It beats twenty of them.
+
+7
+00:00:24.454 --> 00:00:27.436
+Why? Each pile was written by a different author.
+
+8
+00:00:27.406 --> 00:00:30.294
+People write compact code. Models add spaces.
+
+9
+00:00:31.154 --> 00:00:34.131
+And one in seven test backdoors can never even trigger.
+
+10
+00:00:35.154 --> 00:00:38.462
+Keep the problems, swap the authors, and the score follows them.
+
+11
+00:00:38.432 --> 00:00:41.762
+Backdoors by Claude Sonnet 5 push it up to point nine five.
+
+12
+00:00:41.732 --> 00:00:44.837
+When Sonnet 5 writes both sides, it falls to point seven five.
+
+13
+00:00:44.807 --> 00:00:48.674
+So we rebuilt the benchmark with one author, and checked that every backdoor works.
+
+14
+00:00:48.644 --> 00:00:52.577
+A Sonnet 5 monitor catches seventy seven percent of the older models' backdoors,
+
+15
+00:00:52.547 --> 00:00:54.292
+but only thirty seven percent of its own.
+
+16
+00:00:55.647 --> 00:00:59.674
+Count only the backdoors that work, and it catches sixty one percent. Still fewer.
+
+17
+00:01:00.547 --> 00:01:03.978
+Before you trust a monitor benchmark, report baselines that never run the code,
+
+18
+00:01:03.728 --> 00:01:07.280
+pair each class with code by another author, and check that every backdoor works.
+
+19
+00:01:07.250 --> 00:01:11.254
+A high score on a benchmark is not, by itself, evidence of sabotage detection.
+
