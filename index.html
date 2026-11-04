@@ -78,7 +78,7 @@
     /* subtitles, drawn by the page so they clear the controls */
     .ov-cc { position: absolute; left: 0; right: 0; bottom: 4.5%; display: flex; justify-content: center; pointer-events: none; line-height: 1.35;
       transition: bottom .25s cubic-bezier(.4,0,.2,1); }
-    .ov-cc span { max-width: 82%; padding: .12em .45em; border-radius: 4px; background: rgba(8,8,8,.75); color: #fff; text-align: center;
+    .ov-cc span { white-space: pre-line; max-width: 82%; padding: .12em .45em; border-radius: 4px; background: rgba(8,8,8,.75); color: #fff; text-align: center;
       font-family: "Roboto", "Google Sans", "Noto Sans", Arial, sans-serif; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
     .ov-cc:empty, .overview-video:not(.cc-on) .ov-cc { display: none; }
     .overview-video.started.show-ui .ov-cc, .overview-video.started:not(.is-playing) .ov-cc { bottom: 72px; }
@@ -194,7 +194,7 @@
                poster="static/videos/overview_poster.jpg?v=11"
                aria-label="One minute overview of the paper">
           <source src="static/videos/overview.mp4?v=11" type="video/mp4">
-          <track kind="subtitles" src="static/videos/overview.vtt?v=11" srclang="en" label="English">
+          <track kind="subtitles" src="static/videos/overview.vtt?v=12" srclang="en" label="English">
         </video>
         <button class="ov-big" type="button" aria-label="Play video">
           <svg viewBox="0 0 24 24" width="26" height="26"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>

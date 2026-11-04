@@ -1,86 +1,138 @@
 WEBVTT
 
 1
-00:00:00.290 --> 00:00:03.610
-Simple features beat most AI control monitors. Here's the setup.
+00:00:00.290 --> 00:00:02.690
+Simple features beat most
+AI control monitors.
 
 2
-00:00:03.710 --> 00:00:06.090
-An AI agent slips two lines into a file.
+00:00:02.750 --> 00:00:03.650
+Here's the setup.
 
 3
-00:00:06.050 --> 00:00:09.470
-A monitor reads the problem and the code, and scores how suspicious it looks.
+00:00:03.710 --> 00:00:05.990
+An AI agent slips
+two lines into a file.
 
 4
-00:00:10.316 --> 00:00:14.816
-Score every solution, and a good monitor pulls the honest and backdoored piles apart.
+00:00:06.050 --> 00:00:07.656
+A monitor reads the problem
+and the code,
 
 5
-00:00:15.116 --> 00:00:18.076
-These are twenty four published monitors, from best to worst.
+00:00:07.716 --> 00:00:09.520
+and scores how suspicious it looks.
 
 6
-00:00:18.216 --> 00:00:20.656
-Now add a word counter that never runs the code.
+00:00:10.316 --> 00:00:11.437
+Score every solution,
 
 7
-00:00:20.576 --> 00:00:21.896
-It beats twenty of them.
+00:00:11.497 --> 00:00:14.866
+and a good monitor pulls the honest
+and backdoored piles apart.
 
 8
-00:00:23.115 --> 00:00:24.175
-Why does that work?
+00:00:15.116 --> 00:00:18.126
+These are 24 published monitors,
+from best to worst.
 
 9
-00:00:24.475 --> 00:00:26.515
-Each pile was written by a different author.
+00:00:18.216 --> 00:00:20.516
+Now add a word counter
+that never runs the code.
 
 10
-00:00:26.635 --> 00:00:29.635
-People write compact code, and models add spaces.
+00:00:20.576 --> 00:00:21.946
+It beats 20 of them.
 
 11
-00:00:29.655 --> 00:00:32.395
-And one in seven test backdoors can never even trigger.
+00:00:23.115 --> 00:00:24.225
+Why does that work?
 
 12
-00:00:32.803 --> 00:00:36.083
-Keep the problems but swap the authors, and the score follows them.
+00:00:24.475 --> 00:00:26.565
+Each pile was written
+by a different author.
 
 13
-00:00:36.083 --> 00:00:39.483
-With backdoors by Claude Sonnet 5, it rises to point nine five.
+00:00:26.635 --> 00:00:29.595
+People write compact code,
+and models add spaces.
 
 14
-00:00:39.623 --> 00:00:42.463
-When Sonnet 5 writes both sides, it drops to point seven five.
+00:00:29.655 --> 00:00:32.445
+And 1 in 7 test backdoors
+can never even trigger.
 
 15
-00:00:42.974 --> 00:00:47.534
-So we rebuilt the benchmark with one author, and checked that every backdoor works.
+00:00:32.803 --> 00:00:36.023
+Keep the problems but swap the authors,
+and the score follows them.
 
 16
-00:00:47.774 --> 00:00:51.774
-A Sonnet 5 monitor catches seventy seven percent of the older models' backdoors.
+00:00:36.083 --> 00:00:39.533
+With backdoors by Claude Sonnet 5,
+it rises to 0.95.
 
 17
-00:00:51.774 --> 00:00:54.614
-Of its own, it catches only thirty seven percent.
+00:00:39.623 --> 00:00:42.513
+When Sonnet 5 writes both sides,
+it drops to 0.75.
 
 18
-00:00:54.694 --> 00:00:57.854
-Count only the ones that work, and that rises to sixty one. Still fewer.
+00:00:42.974 --> 00:00:45.180
+So we rebuilt the benchmark
+with one author,
 
 19
-00:00:58.463 --> 00:01:02.813
-So before you trust a monitor benchmark, report baselines that never run the code,
+00:00:45.240 --> 00:00:47.584
+and checked that every backdoor works.
 
 20
-00:01:02.513 --> 00:01:06.863
-pair each class with code by another author, and check that every backdoor works.
+00:00:47.774 --> 00:00:51.714
+A Sonnet 5 monitor catches 77%
+of the older models' backdoors.
 
 21
-00:01:07.183 --> 00:01:11.463
-Because a high score on a benchmark is not, by itself, evidence of sabotage detection.
+00:00:51.774 --> 00:00:54.634
+Of its own,
+it catches only 37%.
+
+22
+00:00:54.694 --> 00:00:56.826
+Count only the ones that work,
+and that rises to 61%.
+
+23
+00:00:56.886 --> 00:00:57.904
+Still fewer.
+
+24
+00:00:58.463 --> 00:01:00.418
+So before you trust
+a monitor benchmark,
+
+25
+00:01:00.478 --> 00:01:02.475
+report baselines
+that never run the code,
+
+26
+00:01:02.535 --> 00:01:04.665
+pair each class with code
+by another author,
+
+27
+00:01:04.725 --> 00:01:06.913
+and check that every backdoor works.
+
+28
+00:01:07.183 --> 00:01:09.585
+Because a high score on a benchmark
+is not, by itself,
+
+29
+00:01:09.645 --> 00:01:11.513
+evidence of sabotage detection.
 
