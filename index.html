@@ -486,8 +486,8 @@ checks = load_dataset(repo, "checks_standard_test_split", split="train")</code><
     // subtitles: the track stays hidden and the page draws the current cue itself
     var ccBtn = box.querySelector(".ov-cc-btn"), ccBox = box.querySelector(".ov-cc");
     var tt = v.textTracks && v.textTracks[0];
-    var ccOn = false;
-    try { ccOn = localStorage.getItem("ov-cc") === "1"; } catch (e) {}
+    var ccOn = true;
+    try { ccOn = localStorage.getItem("ov-cc") !== "0"; } catch (e) {}
     var ccLast = null;
     var ccDraw = function () {
       var cue = null, now = v.currentTime, list = tt && tt.cues;
